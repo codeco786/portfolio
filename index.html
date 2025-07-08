@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Hasan - Frontend Developer Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b1120; /* Dark background */
+            color: #e2e8f0; /* Light text color */
+            /* Hide overflow to prevent scrollbars during initial animations */
+            overflow-x: hidden;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #60a5fa); /* Blue gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .profile-circle {
+            position: relative;
+            width: 300px; /* Adjust size as needed */
+            height: 300px; /* Adjust size as needed */
+            border-radius: 50%;
+            /* Background for gradient border effect - this forms the blue ring */
+            background: linear-gradient(to right, #3b82f6, #60a5fa);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            /* Enhanced Glow effect to match the new image */
+            box-shadow: 0 0 80px 20px rgba(59, 130, 246, 0.7); /* Increased blur and spread, slightly lower opacity for a softer, wider glow */
+
+            /* Animation properties for profile circle */
+            opacity: 0;
+            transform: scale(0) rotate(0deg);
+            animation: profile-appear 1s ease-out 0.5s forwards; /* 0.5s delay, 1s duration */
+        }
+        .profile-circle img {
+            width: 88%; /* Image slightly smaller than circle to show more of the border */
+            height: 88%; /* Image slightly smaller than circle to show more of the border */
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            /* To match the inner part of the image with the dark background */
+            background-color: #0b1120;
+        }
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+            background-color: rgba(226, 232, 240, 0.2); /* Light separator */
+        }
+        .stat-item:last-child::after {
+            content: none; /* No separator for the last item */
+        }
+        .section-heading {
+            font-size: 3rem; /* text-5xl */
+            font-weight: 700; /* font-bold */
+            text-align: center;
+            margin-bottom: 3rem; /* mb-12 */
+            color: #e2e8f0; /* Light text color */
+        }
+        .section-subheading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 600; /* font-semibold */
+            text-align: center;
+            margin-bottom: 1rem; /* mb-4 */
+            color: #3b82f6; /* Blue color for emphasis */
+        }
+
+        /* Keyframe Animations */
+        @keyframes profile-appear {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(360deg);
+            }
+        }
+
+        @keyframes fade-in-slide-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce-in {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-10px) scale(1.05);
+            }
+            80% {
+                transform: translateY(5px) scale(0.98);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Typewriter effect for specific text without blinking caret */
+        .typewriter-effect-no-caret {
+            overflow: hidden; /* Ensures text is hidden until typed */
+            white-space: nowrap; /* Keeps text on a single line */
+            border-right: none; /* No blinking caret */
+            font-family: 'Inter', sans-serif; /* Use the same font */
+            display: inline-block; /* Essential for width animation to work correctly */
+            vertical-align: top; /* Align with previous text if needed */
+            width: 0; /* Start with zero width */
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* Base style for elements that will animate on scroll */
+        .hidden-element {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Class added by JavaScript to trigger animation (for fade-in-slide-up) */
+        .animate-fade-in-slide-up {
+            animation: fade-in-slide-up 0.8s ease-out forwards; /* Adjusted duration for smoother appearance */
+            will-change: transform, opacity; /* Hint to browser for performance */
+        }
+
+        /* Class added by JavaScript to trigger bounce animation */
+        .animate-bounce-in {
+            animation: bounce-in 1s ease-out forwards; /* Bounce animation */
+            will-change: transform, opacity; /* Hint to browser for performance */
+        }
+
+        /* Hover effect for skill cards */
+        .skill-card-hover-effect {
+            transition: transform 0.3s ease-in-out; /* Smooth transition for zoom */
+        }
+        .skill-card-hover-effect:hover {
+            transform: scale(1.05); /* Zoom effect on hover */
+        }
+
+        /* Modal specific styles (removed as per request) */
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header/Navigation -->
+    <header class="bg-[#0b1120] py-4 shadow-lg" style="animation: fade-in-slide-up 0.8s ease-out forwards 7.1s;">
+        <nav class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white rounded-md p-2">Portfolio</a>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="#home" class="text-gray-300 hover:text-blue-400 transition duration-300 rounded-md p-2">Home</a></li>
+                <li><a href="#about" class="text-gray-300 hover:text-blue-400 transition duration-300 rounded-md p-2">About</a></li>
+                <li><a href="#skills" class="text-gray-300 hover:text-blue-400 transition duration-300 rounded-md p-2">Skills</a></li>
+                <li><a href="#services" class="text-gray-300 hover:text-blue-400 transition duration-300 rounded-md p-2">Services</a></li>
+                <li><a href="#portfolio" class="text-gray-300 hover:text-blue-400 transition duration-300 rounded-md p-2">Portfolio</a></li>
+                <li><a href="#contact" class="text-gray-300 hover:text-blue-400 transition duration-300 rounded-md p-2">Contact</a></li>
+            </ul>
+            <div class="flex items-center space-x-4">
+                <button class="text-gray-300 hover:text-blue-400 transition duration-300 focus:outline-none">
+                    <i class="fas fa-moon"></i> <!-- Dark mode toggle icon -->
+                </button>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full shadow-lg transition duration-300 flex items-center space-x-2">
+                    <span>Download CV</span>
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="container mx-auto px-6 py-20 flex flex-col md:flex-row items-center justify-between min-h-screen">
+        <div class="md:w-1/2 flex justify-center md:justify-start mb-10 md:mb-0">
+            <div class="profile-circle">
+                <!-- Profile image path updated to local assets folder -->
+                <img src="assets/images/profile.png" alt="Profile Picture" class="rounded-full">
+            </div>
+        </div>
+        <div class="md:w-1/2 text-center md:text-left">
+            <p class="text-lg text-gray-400 mb-2" style="animation: fade-in-slide-up 0.8s ease-out forwards 1.8s;">Hello, I'm</p>
+            <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+                <span class="typewriter-effect-no-caret" style="animation: typing 1.2s steps(16, end) forwards 2.8s;">Muhammad Hasan</span>
+                <br><span class="typewriter-effect-no-caret" style="animation: typing 2s steps(27, end) forwards 4.3s;"><span class="gradient-text">And I'm a Web Developer</span></span>
+            </h1>
+            <p class="text-gray-400 text-lg mb-8 max-w-lg mx-auto md:mx-0" style="animation: fade-in-slide-up 0.8s ease-out forwards 6.5s;">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet iusto tempore possimus voluptates quis necessitatibus, cupiditate explicabo ad a perferendis!
+            </p>
+            <div class="flex justify-center md:justify-start space-x-4 mb-8" style="animation: fade-in-slide-up 0.8s ease-out forwards 6.7s;">
+                <a href="#" class="text-gray-300 hover:text-blue-400 transition duration-300 text-2xl"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gray-300 hover:text-blue-400 transition duration-300 text-2xl"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-300 hover:text-blue-400 transition duration-300 text-2xl"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-300 hover:text-blue-400 transition duration-300 text-2xl"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <div class="flex justify-center md:justify-start space-x-4" style="animation: fade-in-slide-up 0.8s ease-out forwards 6.9s;">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300">Hire Me</button>
+                <button class="border border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300">Contact Me</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="bg-[#0b1120] py-16 hidden-element" data-animate-on-scroll>
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-around items-center text-center">
+            <div class="stat-item relative flex flex-col items-center p-4 md:p-0 mb-8 md:mb-0">
+                <span class="text-5xl font-bold gradient-text">10+</span>
+                <span class="text-gray-400 text-lg mt-2">Years of experience</span>
+            </div>
+            <div class="stat-item relative flex flex-col items-center p-4 md:p-0 mb-8 md:mb-0">
+                <span class="text-5xl font-bold gradient-text">30+</span>
+                <span class="text-gray-400 text-lg mt-2">Projects completed</span>
+            </div>
+            <div class="stat-item relative flex flex-col items-center p-4 md:p-0 mb-8 md:mb-0">
+                <span class="text-5xl font-bold gradient-text">5+</span>
+                <span class="text-gray-400 text-lg mt-2">Technologies mastered</span>
+            </div>
+            <div class="stat-item relative flex flex-col items-center p-4 md:p-0">
+                <span class="text-5xl font-bold gradient-text">100+</span>
+                <span class="text-gray-400 text-lg mt-2">Satisfied Client</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container mx-auto px-6 py-20 min-h-screen hidden-element" data-animate-on-scroll>
+        <h2 class="section-heading hidden-element">About Me</h2>
+        <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+            <div class="md:w-1/2 text-center md:text-left">
+                <h3 class="section-subheading hidden-element">Who I Am</h3>
+                <p class="text-gray-400 text-lg mb-4 hidden-element">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p class="text-gray-400 text-lg hidden-element">
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <!-- About image path updated to local assets folder -->
+                <img src="assets/images/about-image.jpg" alt="About Me" class="rounded-lg shadow-lg hidden-element w-80 h-60">
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="container mx-auto px-6 py-20 min-h-screen hidden-element" data-animate-on-scroll>
+        <h2 class="section-heading hidden-element">My Skills</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+            <!-- Skill Card 1 -->
+            <div class="bg-[#1a202c] p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 hidden-element skill-card-hover-effect" data-skill-card-index="0">
+                <i class="fab fa-html5 text-blue-400 text-5xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">HTML5</h3>
+                <p class="text-gray-400">Strong proficiency in semantic HTML for structuring web content.</p>
+            </div>
+            <!-- Skill Card 2 -->
+            <div class="bg-[#1a202c] p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 hidden-element skill-card-hover-effect" data-skill-card-index="1">
+                <i class="fab fa-css3-alt text-blue-400 text-5xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">CSS3 & Tailwind CSS</h3>
+                <p class="text-gray-400">Expert in modern CSS, including responsive design and Tailwind CSS framework.</p>
+            </div>
+            <!-- Skill Card 3 -->
+            <div class="bg-[#1a202c] p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 hidden-element skill-card-hover-effect" data-skill-card-index="2">
+                <i class="fab fa-js-square text-blue-400 text-5xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">JavaScript</h3>
+                <p class="text-gray-400">Proficient in vanilla JavaScript and ES6+ features for interactive web experiences.</p>
+            </div>
+            <!-- Skill Card 4 -->
+            <div class="bg-[#1a202c] p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 hidden-element skill-card-hover-effect" data-skill-card-index="3">
+                <i class="fab fa-react text-blue-400 text-5xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">React.js</h3>
+                <p class="text-gray-400">Experience in building dynamic user interfaces with React and its ecosystem.</p>
+            </div>
+            <!-- Skill Card 5 -->
+            <div class="bg-[#1a202c] p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 hidden-element skill-card-hover-effect" data-skill-card-index="4">
+                <i class="fas fa-code-branch text-blue-400 text-5xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">Git & GitHub</h3>
+                <p class="text-gray-400">Version control management and collaborative development using Git and GitHub.</p>
+            </div >
+            <!-- Skill Card 6 -->
+            <div class="bg-[#1a202c] p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 hidden-element skill-card-hover-effect" data-skill-card-index="5">
+                <i class="fas fa-mobile-alt text-blue-400 text-5xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">Responsive Design</h3>
+                <p class="text-gray-400">Creating websites that adapt seamlessly to various devices and screen sizes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="container mx-auto px-6 py-20 min-h-screen hidden-element" data-animate-on-scroll>
+        <h2 class="section-heading hidden-element">My Services</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+            <!-- Service Card 1 -->
+            <div class="bg-[#1a202c] p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 hidden-element" data-service-card-index="0">
+                <i class="fas fa-laptop-code text-blue-400 text-5xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">Web Development</h3>
+                <p class="text-gray-400">Building modern, responsive, and high-performance websites from scratch.</p>
+            </div>
+            <!-- Service Card 2 -->
+            <div class="bg-[#1a202c] p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 hidden-element" data-service-card-index="1">
+                <i class="fas fa-mobile-alt text-blue-400 text-5xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">Responsive Design</h3>
+                <p class="text-gray-400">Ensuring your website looks great and functions perfectly on all devices.</p>
+            </div>
+            <!-- Service Card 3 -->
+            <div class="bg-[#1a202c] p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 hidden-element" data-service-card-index="2">
+                <i class="fas fa-palette text-blue-400 text-5xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">UI/UX Design</h3>
+                <p class="text-gray-400">Creating intuitive and engaging user interfaces for optimal user experience.</p>
+            </div>
+            <!-- Service Card 4 -->
+            <div class="bg-[#1a202c] p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 hidden-element" data-service-card-index="3">
+                <i class="fas fa-cogs text-blue-400 text-5xl mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2">Website Maintenance</h3>
+                <p class="text-gray-400">Providing ongoing support, updates, and performance optimization for your website.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="container mx-auto px-6 py-20 min-h-screen hidden-element" data-animate-on-scroll>
+        <h2 class="section-heading hidden-element">My Portfolio</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Portfolio Item 1 -->
+            <div class="bg-[#1a202c] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 hidden-element" data-portfolio-item-index="0">
+                <!-- Portfolio image path updated to local assets folder -->
+                <img src="assets/images/project-1.jpg" alt="Project 1" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-white mb-2" id="project-title-0">Project Title One</h3>
+                    <p class="text-gray-400 text-sm mb-4">A brief description of the project and technologies used.</p>
+                    <a href="#" class="text-blue-400 hover:underline">View Project <i class="fas fa-external-link-alt ml-1"></i></a>
+                    <!-- Removed Generate Description button -->
+                </div>
+            </div>
+            <!-- Portfolio Item 2 -->
+            <div class="bg-[#1a202c] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 hidden-element" data-portfolio-item-index="1">
+                <!-- Portfolio image path updated to local assets folder -->
+                <img src="assets/images/project-2.jpg" alt="Project 2" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-white mb-2" id="project-title-1">Project Title Two</h3>
+                    <p class="text-gray-400 text-sm mb-4">A brief description of the project and technologies used.</p>
+                    <a href="#" class="text-blue-400 hover:underline">View Project <i class="fas fa-external-link-alt ml-1"></i></a>
+                    <!-- Removed Generate Description button -->
+                </div>
+            </div>
+            <!-- Portfolio Item 3 -->
+            <div class="bg-[#1a202c] rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300 hidden-element" data-portfolio-item-index="2">
+                <!-- Portfolio image path updated to local assets folder -->
+                <img src="assets/images/project-3.jpg" alt="Project 3" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-2xl font-semibold text-white mb-2" id="project-title-2">Project Title Three</h3>
+                    <p class="text-gray-400 text-sm mb-4">A brief description of the project and technologies used.</p>
+                    <a href="#" class="text-blue-400 hover:underline">View Project <i class="fas fa-external-link-alt ml-1"></i></a>
+                    <!-- Removed Generate Description button -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container mx-auto px-6 py-20 min-h-screen hidden-element" data-animate-on-scroll>
+        <h2 class="section-heading hidden-element">Contact Me</h2>
+        <div class="flex flex-col items-center justify-center">
+            <div class="md:w-1/2 text-center">
+                <h3 class="section-subheading hidden-element">My Contact Details</h3>
+                <p class="text-gray-400 text-lg mb-2 hidden-element"><i class="fas fa-envelope mr-2"></i> email@example.com</p>
+                <p class="text-gray-400 text-lg mb-2 hidden-element"><i class="fas fa-phone mr-2"></i> +123 456 7890</p>
+                <p class="text-gray-400 text-lg mb-2 hidden-element"><i class="fas fa-map-marker-alt mr-2"></i> Your City, Your Country</p>
+                <div class="flex justify-center space-x-4 mt-6 hidden-element">
+                    <a href="#" class="text-gray-300 hover:text-blue-400 transition duration-300 text-3xl"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 transition duration-300 text-3xl"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 transition duration-300 text-3xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 transition duration-300 text-3xl"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer for main sections
+            const sectionsToAnimate = document.querySelectorAll('[data-animate-on-scroll]');
+
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the section is visible
+            };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const section = entry.target;
+                        
+                        // Animate the section itself to make it visible
+                        section.classList.add('animate-fade-in-slide-up');
+
+                        // Animate the section heading
+                        const heading = section.querySelector('.section-heading');
+                        if (heading) {
+                            heading.classList.add('animate-fade-in-slide-up');
+                            heading.style.animationDelay = '0.1s'; // Slight delay for heading
+                        }
+
+                        // Animate other hidden elements within the section
+                        let innerElements = [];
+                        if (section.id === 'about') {
+                            innerElements = section.querySelectorAll('.section-subheading, p, img');
+                        } else if (section.id === 'contact') {
+                            innerElements = section.querySelectorAll('.section-subheading, p, .flex.justify-center.space-x-4.mt-6');
+                        } else if (section.id === 'stats') {
+                            innerElements = section.querySelectorAll('.stat-item');
+                        }
+
+                        innerElements.forEach((el, index) => {
+                            const delay = 0.2 + (index * 0.1); // Staggered delay for inner elements
+                            el.style.animationDelay = `${delay}s`;
+                            el.classList.add('animate-fade-in-slide-up');
+                        });
+
+
+                        // Special handling for Skills, Services, and Portfolio sections for staggered bounce animations
+                        if (section.id === 'skills' || section.id === 'services' || section.id === 'portfolio') {
+                            const cards = section.querySelectorAll('[data-skill-card-index], [data-service-card-index], [data-portfolio-item-index]');
+                            cards.forEach((card, index) => {
+                                // Calculate delay based on card's index, after heading and other elements
+                                const delay = 0.5 + (index * 0.2); // 0.5s initial delay + 0.2s between each card
+                                card.style.animationDelay = `${delay}s`;
+                                card.classList.add('animate-bounce-in'); // Apply bounce-in animation
+                            });
+                        }
+                        observer.unobserve(section); // Stop observing once animated
+                    }
+                });
+            }, observerOptions);
+
+            sectionsToAnimate.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // Initial animations for elements that appear on page load (not on scroll)
+            // These elements already have inline animation styles and don't use hidden-element class
+            // The header, hero text, and buttons are handled by inline styles.
+        });
+    </script>
+</body>
+</html>
